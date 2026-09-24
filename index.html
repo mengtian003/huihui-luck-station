@@ -18,21 +18,27 @@
     .letter-closed{margin:19px 0 23px;background:linear-gradient(145deg,#fff3df,#e8c9aa);border:1px solid #f9dfbd;border-radius:16px;min-height:218px;display:grid;place-content:center;text-align:center;color:#624056;box-shadow:0 13px 0 rgba(10,7,28,.19),0 24px 42px rgba(10,7,28,.18);position:relative;overflow:hidden}.letter-closed:before{content:"✳";font-size:2.7rem;color:#bd6c71;line-height:1;margin-bottom:10px}.letter-closed b{font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:1.25rem}.letter-closed small{font-size:.86rem;color:#896774;margin-top:5px}.letter-paper{background:#fff6e9;color:#4c3548;border-radius:16px;padding:22px 24px;margin:19px 0 23px;box-shadow:0 13px 0 rgba(10,7,28,.19),0 24px 42px rgba(10,7,28,.18);animation:rise .45s both}.letter-paper p{margin:0 0 13px;line-height:1.9}.letter-paper p:last-child{margin:0}.letter-paper .salute{font-weight:800;color:#995361}.letter-paper .sign{text-align:right;color:#896774;font-size:.9rem;margin-top:18px}.letter-open .letter-closed{display:none}[hidden]{display:none!important}@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}footer{text-align:center;color:#aa9bb6;font-size:.83rem;margin-top:34px;letter-spacing:.04em}
     .letter-closed{background:linear-gradient(180deg,rgba(28,19,44,.03),rgba(28,19,44,.58)),url('./lucky-kiosk.png') center 53%/cover;color:#fff8ea;isolation:isolate}.letter-closed:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 36%,rgba(26,18,39,.65));z-index:-1}.letter-closed b,.letter-closed small{transform:translateY(65px);text-shadow:0 2px 10px #24172f}.letter-closed small{color:#fff1db}
     @media(max-width:700px){.shell{width:min(100% - 28px,510px);padding-top:20px}.heading{margin:25px 0 20px}.grid{grid-template-columns:1fr;gap:16px}.panel{padding:21px;border-radius:24px}.fortune{grid-column:auto;grid-template-columns:1fr;gap:7px}.fortune-card{order:-1;min-height:196px}.fortune-copy{padding-top:12px}.fortune .hint{margin-bottom:0}.wheel-wrap{width:min(80vw,276px)}}
+    .shell{width:min(100% - 32px,760px);min-height:100dvh;display:flex;flex-direction:column;padding-bottom:max(20px,env(safe-area-inset-bottom))}
+    .heading{margin:20px 0 15px}.heading h1{font-size:clamp(2rem,5vw,3.25rem)}.intro{margin:8px 0 0}
+    .progress{display:flex;align-items:center;gap:18px;margin-bottom:18px;color:var(--gold);font-size:.88rem;font-weight:700}.progress-bars{display:flex;gap:7px;flex:1}.progress-bars i{display:block;height:5px;flex:1;border-radius:999px;background:rgba(255,209,143,.22)}.progress-bars i.active{background:linear-gradient(90deg,var(--gold),var(--peach))}
+    .grid{display:block;flex:1}.screen{display:flex;flex-direction:column;gap:17px;min-height:calc(100dvh - 230px)}.screen[hidden]{display:none!important}.screen>.panel{flex:1;display:flex;flex-direction:column;justify-content:center}.screen>.fortune{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr)}.page-actions{display:flex;gap:12px}.page-actions button{flex:1}.screen .letter-closed{min-height:270px}
+    @media(max-width:700px){.shell{width:min(100% - 28px,510px)}.screen{min-height:calc(100dvh - 215px)}.screen>.panel{padding:20px}.screen>.fortune{display:flex;flex-direction:column;align-items:stretch;gap:15px}.fortune-copy{max-width:none}.fortune-card{order:0;min-height:190px}.fortune .hint{margin-bottom:0}.action-row{margin-top:14px}.wheel-wrap{width:min(68vw,245px);margin:4px auto 13px}.screen .letter-closed{min-height:225px}.page-actions button{padding-left:12px;padding-right:12px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
 </head>
 <body>
   <main class="shell">
     <div class="topline"><span>✦ HUIHUI'S LITTLE STATION</span><span class="date" id="today"></span></div>
-    <header class="heading"><p class="eyebrow">营业中 · 今日份</p><h1>慧慧的<span>好运补给站</span></h1><p class="intro">今天也给你留了一点小小的好事。先抽一张吧。</p></header>
-    <div class="grid">
-      <section class="panel fortune" aria-labelledby="fortune-title">
+    <header class="heading"><p class="eyebrow">营业中 · 今日份</p><h1>慧慧的<span>好运补给站</span></h1><p class="intro">今天也给你留了一点小小的好事。</p></header>
+    <nav class="progress" aria-label="补给站进度"><span id="progress-label" aria-live="polite">第 1 页 / 共 3 页</span><span class="progress-bars" aria-hidden="true"><i class="active"></i><i></i><i></i></span></nav>
+    <div class="grid" id="pages">
+      <div class="screen" data-screen="luck"><section class="panel fortune" aria-labelledby="fortune-title">
         <div class="fortune-copy"><h2 id="fortune-title"><span class="step">01</span>抽一张今日好运</h2><p class="hint">每一张都有一句悄悄话和一个小任务。</p><div class="action-row"><button class="primary" id="draw" type="button">抽一张好运卡 ✨</button><span class="micro" id="draw-count">给慧慧准备了 8 张</span></div></div>
         <div class="fortune-card" id="fortune-card" aria-live="polite"><div class="card-top"><span>LUCKY NOTE · HUIHUI</span><span class="card-star">✳</span></div><p class="fortune-line" id="fortune-line">你的今日好运，<br>正在这里等你。</p><div class="tiny-task" id="fortune-task">点一下按钮，拆开第一份补给。</div></div>
-      </section>
-      <section class="panel" aria-labelledby="wheel-title"><h2 id="wheel-title"><span class="step">02</span>今晚吃什么</h2><p class="hint">交给好运转盘。结果不满意，可以再转。</p><div class="wheel-wrap"><div class="wheel-pointer" aria-hidden="true"></div><canvas id="wheel" width="600" height="600" role="img" aria-label="晚餐选择转盘"></canvas></div><div class="wheel-controls"><button class="primary" id="spin" type="button">转一下今晚的菜单</button><div class="result" id="wheel-result" aria-live="polite">今晚的答案，就差你按一下。</div></div><p class="wheel-note">慧慧拥有最终决定权 ♡</p></section>
-      <section class="panel letter" id="letter-section" aria-labelledby="letter-title"><h2 id="letter-title"><span class="step">03</span>有一封给慧慧的小信</h2><p class="hint">没有重要的事，只是想让你打开看看。</p><div class="letter-closed" id="letter-closed"><b>TO 慧慧</b><small>一封只在这里等你拆开的信</small></div><div class="letter-paper" id="letter-paper" hidden><p class="salute">慧慧：</p><p>这不是一封需要等到什么特殊日子才打开的信。</p><p>只是想告诉你：普通的一天，也值得有一点期待。开心的时候，我想听你分享；累了的时候，也可以把烦恼暂时放我这里。</p><p>今晚吃什么可以慢慢选，想做的事也可以慢慢来。希望这个小小的补给站，能让你笑一下。</p><p class="sign">—— 你的专属补给员 ♡</p></div><button class="secondary" id="open-letter" type="button" aria-expanded="false">拆开小信 💌</button></section>
-    </div><footer>今日营业结束了吗？没有。慧慧想来，随时都开门。</footer>
+      </section><nav class="page-actions" aria-label="下一页"><button class="primary" type="button" data-goto="dinner">下一页 · 今晚吃什么 →</button></nav></div>
+      <div class="screen" data-screen="dinner" hidden><section class="panel" aria-labelledby="wheel-title"><h2 id="wheel-title"><span class="step">02</span>今晚吃什么</h2><p class="hint">交给好运转盘。结果不满意，可以再转。</p><div class="wheel-wrap"><div class="wheel-pointer" aria-hidden="true"></div><canvas id="wheel" width="600" height="600" role="img" aria-label="晚餐选择转盘"></canvas></div><div class="wheel-controls"><button class="primary" id="spin" type="button">转一下今晚的菜单</button><div class="result" id="wheel-result" aria-live="polite">今晚的答案，就差你按一下。</div></div><p class="wheel-note">慧慧拥有最终决定权 ♡</p>      </section><nav class="page-actions" aria-label="页面导航"><button class="secondary" type="button" data-goto="luck">← 上一页</button><button class="primary" type="button" data-goto="letter">下一页 · 小信 →</button></nav></div>
+      <div class="screen" data-screen="letter" hidden><section class="panel letter" id="letter-section" aria-labelledby="letter-title"><h2 id="letter-title"><span class="step">03</span>有一封给慧慧的小信</h2><p class="hint">没有重要的事，只是想让你打开看看。</p><div class="letter-closed" id="letter-closed"><b>TO 慧慧</b><small>一封只在这里等你拆开的信</small></div><div class="letter-paper" id="letter-paper" hidden><p class="salute">慧慧：</p><p>这不是一封需要等到什么特殊日子才打开的信。</p><p>只是想告诉你：普通的一天，也值得有一点期待。开心的时候，我想听你分享；累了的时候，也可以把烦恼暂时放我这里。</p><p>今晚吃什么可以慢慢选，想做的事也可以慢慢来。希望这个小小的补给站，能让你笑一下。</p><p class="sign">—— 你的专属补给员 ♡</p></div><button class="secondary" id="open-letter" type="button" aria-expanded="false">拆开小信 💌</button>      </section><nav class="page-actions" aria-label="页面导航"><button class="secondary" type="button" data-goto="dinner">← 上一页</button><button class="primary" type="button" data-goto="luck">回到好运卡 ↺</button></nav></div>
+    </div>
   </main>
   <script>
     const notes = [
@@ -58,6 +64,17 @@
     let angle=0,spinning=false;
     $('spin').addEventListener('click',()=>{if(spinning)return;spinning=true;const button=$('spin');button.disabled=true;$('wheel-result').textContent='正在帮慧慧挑今晚的快乐…';const pick=Math.floor(Math.random()*foods.length),circle=Math.PI*2,targetModulo=((circle-pick*step)%circle+circle)%circle,currentModulo=((angle%circle)+circle)%circle,delta=((targetModulo-currentModulo+circle)%circle)+circle*5;const start=angle,end=angle+delta,t0=performance.now(),duration=3600;function frame(now){const t=Math.min(1,(now-t0)/duration),ease=1-Math.pow(1-t,4);angle=start+(end-start)*ease;canvas.style.transform=`rotate(${angle}rad)`;if(t<1)requestAnimationFrame(frame);else{spinning=false;button.disabled=false;$('wheel-result').innerHTML=`今晚的候选：<strong>${foods[pick]}！</strong>`;}}requestAnimationFrame(frame)});
     $('open-letter').addEventListener('click',()=>{const section=$('letter-section');section.classList.add('letter-open');$('letter-paper').hidden=false;$('open-letter').hidden=true;$('open-letter').setAttribute('aria-expanded','true');});
+    const screenNames=['luck','dinner','letter'];
+    function showScreen(shouldFocus=false){
+      const requested=location.hash.slice(1),current=screenNames.includes(requested)?requested:'luck',index=screenNames.indexOf(current);
+      document.querySelectorAll('.screen').forEach(screen=>{screen.hidden=screen.dataset.screen!==current});
+      $('progress-label').textContent=`第 ${index+1} 页 / 共 3 页`;
+      document.querySelectorAll('.progress-bars i').forEach((bar,i)=>bar.classList.toggle('active',i<=index));
+      if(shouldFocus){window.scrollTo({top:0,behavior:'auto'});const heading=document.querySelector(`[data-screen="${current}"] h2`);heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true})}
+    }
+    document.querySelectorAll('[data-goto]').forEach(button=>button.addEventListener('click',()=>{location.hash=button.dataset.goto}));
+    window.addEventListener('hashchange',()=>showScreen(true));
+    showScreen();
   </script>
 </body>
 </html>
